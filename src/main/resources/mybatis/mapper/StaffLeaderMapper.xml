@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.liu.dao.StaffLeaderMapper">
+  <resultMap id="BaseResultMap" type="com.liu.bean.StaffLeader">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="region_soil_id" jdbcType="INTEGER" property="regionSoilId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="age" jdbcType="INTEGER" property="age" />
+    <result column="hiredate" jdbcType="TIMESTAMP" property="hiredate" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="account_id" jdbcType="INTEGER" property="accountId" />
+    <collection property="members" select="com.liu.dao.StaffMembersMapper.selectByLeaderKey" column="id"/>
+  </resultMap>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from staff_leader
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+  <insert id="insert" parameterType="com.liu.bean.StaffLeader">
+    insert into staff_leader (id, region_soil_id, name, 
+      phone, age, hiredate, address,
+      account_id)
+    values (#{id,jdbcType=INTEGER}, #{regionSoilId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
+      #{phone,jdbcType=VARCHAR}, #{age,jdbcType=INTEGER}, #{hiredate,jdbcType=TIMESTAMP},
+            #{address,jdbcType=VARCHAR},
+      #{accountId,jdbcType=INTEGER})
+  </insert>
+
+  <update id="updateByPrimaryKey" parameterType="com.liu.bean.StaffLeader">
+    update staff_leader
+    <trim prefix="set" suffixOverrides=",">
+        <if test="regionSoilId != null">region_soil_id = #{regionSoilId,jdbcType=INTEGER},</if>
+        <if test="name != null">name = #{name,jdbcType=VARCHAR},</if>
+        <if test="phone != null">phone = #{phone,jdbcType=VARCHAR},</if>
+        <if test="age != null">age = #{age,jdbcType=INTEGER},</if>
+        <if test="hiredate != null">hiredate = #{hiredate,jdbcType=TIMESTAMP},</if>
+        <if test="address != null">address = #{address,jdbcType=VARCHAR},</if>
+        <if test="accountId != null">account_id = #{accountId,jdbcType=INTEGER}</if>
+    </trim>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <update id="unBindRegion" parameterType="com.liu.bean.StaffLeader">
+    update staff_leader
+    <trim prefix="set" suffixOverrides=",">
+      region_soil_id = null,
+      <if test="name != null">name = #{name,jdbcType=VARCHAR},</if>
+      <if test="phone != null">phone = #{phone,jdbcType=VARCHAR},</if>
+      <if test="age != null">age = #{age,jdbcType=INTEGER},</if>
+      <if test="hiredate != null">hiredate = #{hiredate,jdbcType=TIMESTAMP},</if>
+      <if test="address != null">address = #{address,jdbcType=VARCHAR},</if>
+      <if test="accountId != null">account_id = #{accountId,jdbcType=INTEGER}</if>
+    </trim>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectByRegionSoilId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+
+    select id, region_soil_id, name, phone, age, hiredate, account_id,address
+    from staff_leader
+    where region_soil_id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectByKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+
+    select id, region_soil_id, name, phone, age, hiredate, account_id,address
+    from staff_leader
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectByKey2" parameterType="java.lang.Integer" resultType="hashmap">
+    SELECT
+      b.name bigName,
+      s.name leaderName,
+      s.phone,
+      s.age,
+      s.address,
+      a.small_name smallName
+    FROM region b,staff_leader s,region_soil a
+    WHERE b.region_id=a.region_id and s.region_soil_id = a.id and s.id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, region_soil_id, name, phone, age, hiredate, account_id,address
+    from staff_leader
+  </select>
+
+  <select id="getEmptyAccountS" resultType="hashmap">
+        select id,name
+        from staff_leader
+        where account_id IS NULL
+  </select>
+
+  <update id="updateEmptyAccount" parameterType="hashmap">
+    update staff_leader
+    set account_id = #{accountId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+</mapper>

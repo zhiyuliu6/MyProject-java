@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.liu.dao.DrawPointMapper">
+
+    <resultMap id="BasicResultMap" type="com.liu.bean.DrawPoint">
+        <id column="smallR_id" jdbcType="INTEGER" property="smallRId" />
+        <result column="lat" jdbcType="DOUBLE" property="lat" />
+        <result column="lng" jdbcType="INTEGER" property="lng" />
+    </resultMap>
+
+    <select id="allBySmId" parameterType="integer" resultMap="BasicResultMap">
+        select lat,lng
+        from draw_point
+        where smallR_id=#{id,jdbcType=INTEGER}
+    </select>
+
+    <insert id="addPoint" parameterType="com.liu.bean.DrawPoint">
+        insert into draw_point
+        (smallR_id,lat,lng)
+        values
+        <foreach collection="pointList" item="item" separator=",">
+            (#{item.smallRId},#{item.lat},#{item.lng})
+        </foreach>
+    </insert>
+
+</mapper>

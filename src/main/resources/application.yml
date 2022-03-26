@@ -1,0 +1,18 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/commonweal_forests?useSSL=true&useUnicode=true&characterEncoding=utf8&serverTimezone=GMT%2b8
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    password: 123456
+    username: root
+  redis:
+    host: 192.168.113.128
+    port: 6379
+    password: '17335133561liu'
+    timeout: 6000
+
+mybatis:
+  mapper-locations: classpath:mybatis/mapper/*.xml
+  config-location: classpath:mybatis/mybatis-config.xml
+
+upload:
+  path: E:\编程练习\project2\src\main\resources\static\

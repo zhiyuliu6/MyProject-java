@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.liu.dao.RegionMapper">
+  <resultMap id="BaseResultMap" type="com.liu.bean.Region">
+    <id column="region_id" jdbcType="INTEGER" property="regionId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="search_id" jdbcType="INTEGER" property="searchId" />
+    <result column="latitude" jdbcType="DOUBLE" property="latitude"/>
+    <result column="longitude" jdbcType="DOUBLE" property="longitude"/>
+    <collection property="smallRegions" select="com.liu.dao.RegionSoilMapper.selectByRegionId" column="region_id"/>
+  </resultMap>
+
+  <resultMap id="FallResultMap" type="com.liu.bean.Region">
+    <id column="region_id" jdbcType="INTEGER" property="regionId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="search_id" jdbcType="INTEGER" property="searchId" />
+    <result column="latitude" jdbcType="DOUBLE" property="latitude"/>
+    <result column="longitude" jdbcType="DOUBLE" property="longitude"/>
+    <collection property="smallRegions" select="com.liu.dao.RegionSoilMapper.allInfo" column="region_id"/>
+  </resultMap>
+
+  <resultMap id="relationship" type="com.liu.bean.Region">
+    <id column="region_id" jdbcType="INTEGER" property="regionId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <collection property="smallRegions"   select="com.liu.dao.RegionSoilMapper.regionRelationship" column="region_id"/>
+  </resultMap>
+
+  <select id="selectAll" resultMap="BaseResultMap">
+    select region_id, name,search_id,latitude,longitude
+    from region
+  </select>
+
+  <select id="selectAllInfo" resultMap="FallResultMap">
+    select region_id, name,search_id,latitude,longitude
+    from region
+  </select>
+
+  <select id="selectAllSearchId" resultType="hashmap">
+    select region_id regionId,search_id searchId
+    from region
+  </select>
+  
+  <select id="regionRelationship" resultMap="relationship">
+    select region_id, name
+    from region
+  </select>
+
+</mapper>

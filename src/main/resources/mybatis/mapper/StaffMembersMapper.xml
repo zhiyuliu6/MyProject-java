@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.liu.dao.StaffMembersMapper">
+  <resultMap id="BaseResultMap" type="com.liu.bean.StaffMembers">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="meb_name" jdbcType="VARCHAR" property="mebName" />
+    <result column="meb_age" jdbcType="VARCHAR" property="mebAge" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="staff_leader_id" jdbcType="INTEGER" property="staffLeaderId" />
+  </resultMap>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from staff_members
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+
+<!--  按照组长id删除组员-->
+  <delete id="deleteByStaffLeaderIdInt" parameterType="java.lang.Integer">
+    delete from staff_members
+    where staff_leader_id = #{id,jdbcType=INTEGER}
+  </delete>
+
+  <insert id="insert" parameterType="com.liu.bean.StaffMembers">
+    insert into staff_members (id, meb_name, meb_age, 
+      phone, staff_leader_id)
+    values (#{id,jdbcType=VARCHAR}, #{mebName,jdbcType=VARCHAR}, #{mebAge,jdbcType=VARCHAR},
+      #{phone,jdbcType=VARCHAR}, #{staffLeaderId,jdbcType=INTEGER})
+  </insert>
+
+  <select id="selectByLeaderKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, meb_name, meb_age, phone, staff_leader_id
+    from staff_members
+    where staff_leader_id = #{id,jdbcType=INTEGER}
+  </select>
+</mapper>
