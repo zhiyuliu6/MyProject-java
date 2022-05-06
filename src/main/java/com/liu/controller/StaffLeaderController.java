@@ -4,15 +4,13 @@ import com.alibaba.fastjson.JSON;
 import com.liu.bean.StaffLeader;
 import com.liu.service.StaffLeaderService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
 
 @RestController
+@RequestMapping("/leader")
 public class StaffLeaderController {
 
       @Autowired
@@ -36,8 +34,8 @@ public class StaffLeaderController {
       }
 
       @PostMapping("/addStaffLeader")
-      public void addStaffLeader(@RequestBody StaffLeader staffLeader){
-            staffLeaderService.addStaffLeader(staffLeader);
+      public Integer addStaffLeader(@RequestBody StaffLeader staffLeader){
+            return staffLeaderService.addStaffLeader(staffLeader);
       }
 
       @GetMapping("/getEmptyAccount")

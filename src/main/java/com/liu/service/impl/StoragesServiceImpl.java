@@ -18,4 +18,34 @@ public class StoragesServiceImpl implements StoragesService {
       public List<Storages> selectAllTree(String type) {
             return storagesMapper.selectAllTree(type);
       }
+
+      @Override
+      public List<Storages> selectAll() {
+            return storagesMapper.selectAll();
+      }
+
+      @Override
+      public void updateNumber(Storages storages) {
+            storagesMapper.updateByPrimaryKey(storages);
+      }
+
+      @Override
+      public void deleteByPrimaryKey(Integer id) {
+            storagesMapper.deleteByPrimaryKey(id);
+      }
+
+      @Override
+      public void deleteList(List<Integer> idList) {
+            storagesMapper.deleteByList(idList);
+      }
+
+      @Override
+      public void addItem(Storages storages) {
+            storagesMapper.insert(storages);
+      }
+
+      @Override
+      public List<String> selectAllType() {
+            return storagesMapper.selectAllType();
+      }
 }

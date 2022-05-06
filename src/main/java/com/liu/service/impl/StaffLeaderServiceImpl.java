@@ -30,8 +30,9 @@ public class StaffLeaderServiceImpl implements StaffLeaderService {
       }
 
       @Override
-      public void addStaffLeader(StaffLeader staffLeader) {
+      public Integer addStaffLeader(StaffLeader staffLeader) {
             staffLeaderMapper.insert(staffLeader);
+            return staffLeader.getId();
       }
 
       @Override

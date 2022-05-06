@@ -9,6 +9,10 @@ spring:
     port: 6379
     password: '17335133561liu'
     timeout: 6000
+  servlet:
+    multipart:
+      max-request-size: 2500MB
+      max-file-size: 2000MB
 
 mybatis:
   mapper-locations: classpath:mybatis/mapper/*.xml

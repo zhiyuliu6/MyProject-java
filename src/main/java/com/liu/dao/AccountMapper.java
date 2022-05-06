@@ -1,9 +1,11 @@
 package com.liu.dao;
 
 import com.liu.bean.Account;
+import org.apache.ibatis.annotations.MapKey;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface AccountMapper {
@@ -16,5 +18,5 @@ public interface AccountMapper {
 
     int updateByPrimaryKey(Account record);
 
-
+    Account selectAdmin(String usr);
 }

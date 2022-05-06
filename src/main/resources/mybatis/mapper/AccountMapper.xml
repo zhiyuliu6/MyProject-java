@@ -11,6 +11,7 @@
     <result column="date" jdbcType="TIMESTAMP" property="date" />
   </resultMap>
 
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from account
     where id = #{id,jdbcType=INTEGER}
@@ -38,10 +39,16 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
 
-
   <select id="selectAll" resultMap="BaseResultMap">
 
     select id, usr, psw, login_type, name, date
     from account
   </select>
+
+  <select id="selectAdmin" parameterType="string" resultType="com.liu.bean.Account">
+    select usr,psw,id
+    from account
+    where usr = #{usr} and login_type = 'Administrator'
+  </select>
+
 </mapper>

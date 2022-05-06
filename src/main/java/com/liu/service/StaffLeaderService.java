@@ -13,7 +13,7 @@ public interface StaffLeaderService {
 
       void deleteStaffLeader(Integer id);
 
-      void addStaffLeader(StaffLeader staffLeader);
+      Integer addStaffLeader(StaffLeader staffLeader);
 
       List<Map<String,Object>> getEmptyAccountS();
 

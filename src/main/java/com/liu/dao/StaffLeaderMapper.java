@@ -12,7 +12,7 @@ public interface StaffLeaderMapper {
 
     int deleteByPrimaryKey(Integer id);
 
-    int insert(StaffLeader record);
+    Integer insert(StaffLeader record);
 
     List<StaffLeader> selectAll();
 
